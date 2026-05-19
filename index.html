@@ -74,6 +74,19 @@ tbody tr:hover{background:#F9FAFB}
 .stat-box .v{font-size:22px;font-weight:800;color:#111827}
 .stat-box .l{font-size:11px;color:var(--gray);margin-top:3px}
 
+/* PROGRESS BAR */
+.prog-wrap{background:#E5E7EB;border-radius:99px;height:10px;overflow:hidden;margin:8px 0 4px}
+.prog-bar{height:100%;border-radius:99px;background:linear-gradient(90deg,#1877F2,#7C3AED)}
+/* RECOMENDACIONES */
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.rec-card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.07);border-left:4px solid #1877F2}
+.rec-card.orange{border-left-color:#F59E0B}
+.rec-card.green{border-left-color:#00A854}
+.rec-num{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gray);margin-bottom:6px}
+.rec-title{font-size:14px;font-weight:700;color:#111827;margin-bottom:8px;line-height:1.3}
+.rec-body{font-size:13px;color:#374151;line-height:1.5;margin-bottom:10px}
+.rec-impact{font-size:12px;font-weight:600;color:#166534;background:#DCFCE7;padding:4px 10px;border-radius:20px;display:inline-block}
+@media(max-width:900px){.rec-grid{grid-template-columns:1fr}}
 /* FOOTER */
 footer{text-align:center;color:var(--gray);font-size:11px;padding:24px;border-top:1px solid #E5E7EB;margin-top:8px}
 
@@ -133,7 +146,64 @@ footer{text-align:center;color:var(--gray);font-size:11px;padding:24px;border-to
   </div>
 
   <!-- Charts -->
-  <p class="section-title">Distribucion del Presupuesto</p>
+  
+  <p class="section-title">Proyeccion a Cierre de Mayo</p>
+  <div class="card" style="margin-bottom:24px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#111827">Progreso del mes</div>
+        <div style="font-size:13px;color:#6B7280;margin-top:2px">Dia 19 de 31 — a este ritmo, el mes cierra asi:</div>
+      </div>
+      <div style="font-size:22px;font-weight:800;color:#1877F2">61% <span style="font-size:13px;font-weight:500;color:#6B7280">del mes ejecutado</span></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-bar" style="width:61.3%"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:#9CA3AF;margin-bottom:20px"><span>1 mayo</span><span>Hoy (19)</span><span>31 mayo</span></div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+
+      <div style="background:#F9FAFB;border-radius:10px;padding:16px">
+        <div style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Inversion</div>
+        <div style="display:flex;align-items:flex-end;gap:6px;margin-bottom:6px">
+          <span style="font-size:20px;font-weight:800;color:#111827"><p class="section-title">Distribucion del Presupuesto</p>,728</span>
+          <span style="font-size:11px;color:#6B7280;margin-bottom:3px">actual</span>
+        </div>
+        <div class="prog-wrap"><div class="prog-bar" style="width:61.3%;background:#1877F2"></div></div>
+        <div style="font-size:13px;font-weight:700;color:#1877F2;margin-top:6px">→ $2,820 proyectado</div>
+      </div>
+
+      <div style="background:#F9FAFB;border-radius:10px;padding:16px">
+        <div style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Conversaciones</div>
+        <div style="display:flex;align-items:flex-end;gap:6px;margin-bottom:6px">
+          <span style="font-size:20px;font-weight:800;color:#111827">417</span>
+          <span style="font-size:11px;color:#6B7280;margin-bottom:3px">actual</span>
+        </div>
+        <div class="prog-wrap"><div class="prog-bar" style="width:61.3%;background:#00A854"></div></div>
+        <div style="font-size:13px;font-weight:700;color:#00A854;margin-top:6px">→ 680 proyectadas</div>
+      </div>
+
+      <div style="background:#F9FAFB;border-radius:10px;padding:16px">
+        <div style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Leads</div>
+        <div style="display:flex;align-items:flex-end;gap:6px;margin-bottom:6px">
+          <span style="font-size:20px;font-weight:800;color:#111827">26</span>
+          <span style="font-size:11px;color:#6B7280;margin-bottom:3px">actual</span>
+        </div>
+        <div class="prog-wrap"><div class="prog-bar" style="width:61.3%;background:#F59E0B"></div></div>
+        <div style="font-size:13px;font-weight:700;color:#F59E0B;margin-top:6px">→ 42 proyectados</div>
+      </div>
+
+      <div style="background:#F9FAFB;border-radius:10px;padding:16px">
+        <div style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">CPR Mensajes</div>
+        <div style="display:flex;align-items:flex-end;gap:6px;margin-bottom:6px">
+          <span style="font-size:20px;font-weight:800;color:#111827">$2.30</span>
+          <span style="font-size:11px;color:#6B7280;margin-bottom:3px">actual</span>
+        </div>
+        <div class="prog-wrap"><div class="prog-bar" style="width:100%;background:#7C3AED"></div></div>
+        <div style="font-size:13px;font-weight:700;color:#7C3AED;margin-top:6px">→ $2.30 estable</div>
+      </div>
+
+    </div>
+  </div>
+<p class="section-title">Distribucion del Presupuesto</p>
   <div class="charts-row">
     <div class="card">
       <h3>Inversion por campana (USD)</h3>
@@ -325,7 +395,43 @@ footer{text-align:center;color:var(--gray);font-size:11px;padding:24px;border-to
   </div>
 
 </div><!-- /wrap -->
+  <p class="section-title">Recomendaciones Estrategicas</p>
+  <div class="rec-grid">
 
+    <div class="rec-card">
+      <div class="rec-num">Accion 1 — Escalar</div>
+      <div class="rec-title">Doblar presupuesto en 2026 WHATSAPP hacia 35-44F y 25-34M</div>
+      <div class="rec-body">Estos dos segmentos tienen CPR de 
+
+
+  <!-- MEJORES CREATIVOS -->.73 y 
+
+
+  <!-- MEJORES CREATIVOS -->.49 respectivamente — los mas eficientes del mes. Aun tienen margen de escala sin saturar la audiencia (frecuencia bajo 2.5x).</div>
+      <span class="rec-impact">+ Est. 120 conversaciones adicionales al mes</span>
+    </div>
+
+    <div class="rec-card orange">
+      <div class="rec-num">Accion 2 — Revisar</div>
+      <div class="rec-title">Auditar creativos de Packs Madres antes de reactivar</div>
+      <div class="rec-body">Gasto $319 para 58 conversaciones ($5.51 CPR) mientras 2026 WHATSAPP logra 
+
+
+  <!-- MEJORES CREATIVOS -->.87 con el mismo objetivo. La diferencia sugiere un problema de creativo o audiencia, no de presupuesto.</div>
+      <span class="rec-impact" style="background:#FEF3C7;color:#92400E">Ahorro potencial: $180/mes</span>
+    </div>
+
+    <div class="rec-card green">
+      <div class="rec-num">Accion 3 — Optimizar</div>
+      <div class="rec-title">Concentrar CITY ELIO en segmento 18-24 Femenino</div>
+      <div class="rec-body">Este segmento genera leads a 
+
+
+  <!-- MEJORES CREATIVOS -->.92 vs $23.72 del segmento 25-34M. Redirigir el presupuesto de los segmentos caros hacia 18-24F y 25-34F puede bajar el CPR promedio de leads de $18 a menos de $8.</div>
+      <span class="rec-impact">CPR leads: $18 → est. $7</span>
+    </div>
+
+  </div>
 
   <!-- MEJORES CREATIVOS -->
   <p class="section-title">Mejores Creativos del Mes</p>
