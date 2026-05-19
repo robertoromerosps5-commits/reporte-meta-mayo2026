@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporte Meta Ads — Mayo 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --blue:#1877F2; --green:#00A854; --orange:#F59E0B; --purple:#7C3AED;
+  --red:#DC2626; --gray:#6B7280; --light:#F3F4F6; --white:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F3F4F6;color:#111827}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#1877F2 0%,#0C47B7 100%);color:#fff;padding:36px 48px 28px}
+.header h1{font-size:26px;font-weight:700;letter-spacing:-.3px}
+.header p{font-size:14px;opacity:.8;margin-top:4px}
+.badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);
+  padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;margin-top:10px}
+
+/* LAYOUT */
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px}
+.section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--gray);margin-bottom:14px}
+
+/* KPI CARDS */
+.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:24px}
+.kpi{background:#fff;border-radius:12px;padding:18px 16px;box-shadow:0 1px 3px rgba(0,0,0,.07);border-top:3px solid var(--blue)}
+.kpi.g{border-top-color:var(--green)}.kpi.o{border-top-color:var(--orange)}.kpi.p{border-top-color:var(--purple)}
+.kpi-label{font-size:11px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.kpi-value{font-size:26px;font-weight:800;color:#111827;line-height:1}
+.kpi-sub{font-size:11px;color:var(--gray);margin-top:5px}
+
+/* CHARTS ROW */
+.charts-row{display:grid;grid-template-columns:3fr 2fr;gap:16px;margin-bottom:24px}
+.card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.card h3{font-size:14px;font-weight:700;color:#111827;margin-bottom:16px}
+
+/* TABS */
+.tabs-wrap{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.07);margin-bottom:24px;overflow:hidden}
+.tabs-nav{display:flex;background:#F9FAFB;border-bottom:1px solid #E5E7EB;padding:6px 16px;gap:4px}
+.tab-btn{padding:8px 18px;border:none;background:none;border-radius:8px;font-size:13px;font-weight:600;
+  color:var(--gray);cursor:pointer;transition:all .15s}
+.tab-btn.active{background:#fff;color:var(--blue);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.tab-pane{display:none;padding:22px}.tab-pane.active{display:block}
+
+/* HIGHLIGHT BOX */
+.hl{background:linear-gradient(135deg,#F0FDF4,#ECFDF5);border:1px solid #86EFAC;
+  border-radius:10px;padding:16px 18px;margin-bottom:18px}
+.hl-title{font-size:13px;font-weight:700;color:#166534;margin-bottom:8px}
+.hl-item{font-size:13px;color:#15803D;padding:2px 0;padding-left:16px;position:relative}
+.hl-item::before{content:"✓";position:absolute;left:0;font-weight:700}
+
+/* TABLES */
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:#F9FAFB;padding:9px 12px;text-align:left;font-size:11px;font-weight:700;
+  color:var(--gray);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #E5E7EB}
+tbody td{padding:10px 12px;border-bottom:1px solid #F3F4F6}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#F9FAFB}
+
+/* PILLS */
+.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700}
+.p-green{background:#DCFCE7;color:#166534}.p-blue{background:#DBEAFE;color:#1D4ED8}
+.p-orange{background:#FEF3C7;color:#92400E}.p-red{background:#FEE2E2;color:#991B1B}
+.p-gray{background:#F3F4F6;color:#6B7280}
+
+/* STAT MINI GRID */
+.stat-grid{display:grid;gap:12px;margin-bottom:18px}
+.stat-grid.cols3{grid-template-columns:repeat(3,1fr)}
+.stat-grid.cols4{grid-template-columns:repeat(4,1fr)}
+.stat-box{background:#F9FAFB;border-radius:10px;padding:14px;text-align:center}
+.stat-box .v{font-size:22px;font-weight:800;color:#111827}
+.stat-box .l{font-size:11px;color:var(--gray);margin-top:3px}
+
+/* FOOTER */
+footer{text-align:center;color:var(--gray);font-size:11px;padding:24px;border-top:1px solid #E5E7EB;margin-top:8px}
+
+@media(max-width:900px){
+  .kpi-row{grid-template-columns:repeat(3,1fr)}
+  .charts-row{grid-template-columns:1fr}
+  .header{padding:24px 20px}
+}
+@media(max-width:600px){
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Reporte de Pauta Digital — Meta Ads</h1>
+  <p>Analisis de rendimiento por campana, objetivo y segmento de audiencia</p>
+  <span class="badge">1 mayo – 19 mayo 2026 &nbsp;|&nbsp; 19 dias activos</span>
+</div>
+
+<div class="wrap">
+
+  <!-- KPIs -->
+  <p class="section-title">Resumen General</p>
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Inversion Total</div>
+      <div class="kpi-value">$1,728</div>
+      <div class="kpi-sub">9 campanas activas</div>
+    </div>
+    <div class="kpi g">
+      <div class="kpi-label">Conversaciones</div>
+      <div class="kpi-value">417</div>
+      <div class="kpi-sub">WhatsApp iniciadas</div>
+    </div>
+    <div class="kpi g">
+      <div class="kpi-label">CPR Mensajes</div>
+      <div class="kpi-value">$2.30</div>
+      <div class="kpi-sub">Mejor segmento: $0.49</div>
+    </div>
+    <div class="kpi o">
+      <div class="kpi-label">Leads Generados</div>
+      <div class="kpi-value">26</div>
+      <div class="kpi-sub">2 campanas</div>
+    </div>
+    <div class="kpi o">
+      <div class="kpi-label">CPR Leads</div>
+      <div class="kpi-value">$18.11</div>
+      <div class="kpi-sub">Mejor segmento: $1.92</div>
+    </div>
+    <div class="kpi p">
+      <div class="kpi-label">Impresiones</div>
+      <div class="kpi-value">1.18M</div>
+      <div class="kpi-sub">CPM promedio: $1.46</div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <p class="section-title">Distribucion del Presupuesto</p>
+  <div class="charts-row">
+    <div class="card">
+      <h3>Inversion por campana (USD)</h3>
+      <canvas id="spendChart" height="220"></canvas>
+    </div>
+    <div class="card">
+      <h3>Presupuesto por objetivo</h3>
+      <canvas id="objChart" height="220"></canvas>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <p class="section-title">Analisis por Objetivo</p>
+  <div class="tabs-wrap">
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="showTab('mensajes',this)">Mensajes (417 conv.)</button>
+      <button class="tab-btn" onclick="showTab('alcance',this)">Alcance (654K imp.)</button>
+      <button class="tab-btn" onclick="showTab('leads',this)">Leads (26)</button>
+      <button class="tab-btn" onclick="showTab('trafico',this)">Trafico (834 clics)</button>
+    </div>
+
+    <!-- MENSAJES -->
+    <div id="tab-mensajes" class="tab-pane active">
+      <div class="hl">
+        <div class="hl-title">Lo que esta funcionando bien</div>
+        <div class="hl-item">2026 WHATSAPP lidera con 254 conversaciones a $0.87 promedio — 3x mas eficiente que las otras campanas</div>
+        <div class="hl-item">25-34 masculino: $0.49 por conversacion — el segmento mas eficiente de todo el mes</div>
+        <div class="hl-item">Mujeres 35-64 anos son la audiencia mas consistente en volumen y costo (4 segmentos bajo $1)</div>
+        <div class="hl-item">BDH Invitacion Madre logra $2.51/conv con campana ya pausada — buena base para reactivar</div>
+      </div>
+      <canvas id="mensajesChart" height="120" style="margin-bottom:20px"></canvas>
+      <table>
+        <thead>
+          <tr><th>Campana</th><th>Inversion</th><th>Conversaciones</th><th>CPR</th><th>Estado</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>2026 - WHATSAPP</strong> &nbsp;<span style="color:#F59E0B;font-weight:700">MEJOR</span></td>
+            <td>$221.13</td><td><strong>254</strong></td>
+            <td><span class="pill p-green">$0.87</span></td>
+            <td><span class="pill p-green">Activa</span></td>
+          </tr>
+          <tr>
+            <td>BDH | Invitacion Madre</td>
+            <td>$105.45</td><td>42</td>
+            <td><span class="pill p-green">$2.51</span></td>
+            <td><span class="pill p-gray">Inactiva</span></td>
+          </tr>
+          <tr>
+            <td>BDH | Packs WS Marzo</td>
+            <td>$166.11</td><td>35</td>
+            <td><span class="pill p-blue">$4.75</span></td>
+            <td><span class="pill p-gray">Inactiva</span></td>
+          </tr>
+          <tr>
+            <td>Brunch Mayo v2</td>
+            <td>$145.97</td><td>27</td>
+            <td><span class="pill p-orange">$5.41</span></td>
+            <td><span class="pill p-gray">Inactiva</span></td>
+          </tr>
+          <tr>
+            <td>Packs Madres</td>
+            <td>$319.53</td><td>58</td>
+            <td><span class="pill p-orange">$5.51</span></td>
+            <td><span class="pill p-gray">Completada</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:22px">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:14px">Top 5 segmentos — Campanas de Mensajes</h3>
+        <table>
+          <thead>
+            <tr><th>Campana</th><th>Segmento</th><th>Conversaciones</th><th>Inversion</th><th>CPR</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2026 - WHATSAPP</td><td><strong>25-34 Masculino</strong></td><td>17</td><td>$8.36</td><td><span class="pill p-green">$0.49</span></td></tr>
+            <tr><td>2026 - WHATSAPP</td><td>35-44 Femenino</td><td>45</td><td>$32.91</td><td><span class="pill p-green">$0.73</span></td></tr>
+            <tr><td>2026 - WHATSAPP</td><td>45-54 Femenino</td><td>39</td><td>$29.68</td><td><span class="pill p-green">$0.76</span></td></tr>
+            <tr><td>2026 - WHATSAPP</td><td>25-34 Femenino</td><td>26</td><td>$21.33</td><td><span class="pill p-green">$0.82</span></td></tr>
+            <tr><td>2026 - WHATSAPP</td><td>55-64 Femenino</td><td>54</td><td>$51.77</td><td><span class="pill p-green">$0.96</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ALCANCE -->
+    <div id="tab-alcance" class="tab-pane">
+      <div class="hl">
+        <div class="hl-title">Lo que esta funcionando bien</div>
+        <div class="hl-item">CPM de $0.34 — excelente eficiencia para campanas de alcance en la region</div>
+        <div class="hl-item">654K impresiones generadas con solo $221 de inversion</div>
+        <div class="hl-item">18-24 y 25-34 son los segmentos de mayor volumen y menor costo por impresion</div>
+        <div class="hl-item">Frecuencia entre 2.4–3.4 en todos los segmentos — sin sobreexposicion</div>
+      </div>
+      <div class="stat-grid cols3">
+        <div class="stat-box"><div class="v">$0.34</div><div class="l">CPM</div></div>
+        <div class="stat-box"><div class="v">654K</div><div class="l">Impresiones</div></div>
+        <div class="stat-box"><div class="v">2.8x</div><div class="l">Frecuencia promedio</div></div>
+      </div>
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:14px">Distribucion de inversion por segmento</h3>
+      <canvas id="alcanceChart" height="130" style="margin-bottom:20px"></canvas>
+      <table>
+        <thead>
+          <tr><th>Segmento</th><th>Inversion</th><th>Impresiones</th><th>Alcance (personas)</th><th>Frecuencia</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>18-24 Masculino</td><td>$50.32</td><td>158,197</td><td>48,483</td><td>3.27x</td></tr>
+          <tr><td>25-34 Masculino</td><td>$48.09</td><td>143,082</td><td>46,351</td><td>3.09x</td></tr>
+          <tr><td>18-24 Femenino</td><td>$46.11</td><td>141,695</td><td>46,455</td><td>3.05x</td></tr>
+          <tr><td>25-34 Femenino</td><td>$31.99</td><td>87,678</td><td>32,290</td><td>2.72x</td></tr>
+          <tr><td>35-44 Masculino</td><td>$14.93</td><td>41,012</td><td>15,289</td><td>2.68x</td></tr>
+          <tr><td>35-44 Femenino</td><td>$9.91</td><td>26,151</td><td>10,483</td><td>2.49x</td></tr>
+          <tr><td>45-54 Masculino</td><td>$5.54</td><td>16,515</td><td>5,864</td><td>2.82x</td></tr>
+          <tr><td>45-54 Femenino</td><td>$4.85</td><td>13,102</td><td>5,445</td><td>2.41x</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- LEADS -->
+    <div id="tab-leads" class="tab-pane">
+      <div class="hl">
+        <div class="hl-title">Lo que esta funcionando bien</div>
+        <div class="hl-item">18-24 Femenino en CITY ELIO: $1.92/lead — el mejor CPR de toda la cuenta este mes</div>
+        <div class="hl-item">25-34 Femenino consistente en ambas campanas con CPR competitivo ($6.16 y $6.18)</div>
+        <div class="hl-item">CITY ELIO con campana activa — puede seguir optimizando hacia 18-24F y 25-34F</div>
+        <div class="hl-item">BHD Reserva Madre genero 11 leads para Dia de la Madre — campana estacional cumplida</div>
+      </div>
+      <div class="stat-grid cols3" style="margin-bottom:18px">
+        <div class="stat-box"><div class="v">26</div><div class="l">Leads totales</div></div>
+        <div class="stat-box"><div class="v">$1.92</div><div class="l">Mejor CPR (18-24 F)</div></div>
+        <div class="stat-box"><div class="v">$470.96</div><div class="l">Inversion total en leads</div></div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Campana</th><th>Segmento</th><th>Leads</th><th>Inversion</th><th>CPR</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>CITY | RESERVAS ELIO</td><td><strong>18-24 Femenino</strong></td><td>4</td><td>$7.67</td><td><span class="pill p-green">$1.92</span></td></tr>
+          <tr><td>CITY | RESERVAS ELIO</td><td>25-34 Femenino</td><td>6</td><td>$37.07</td><td><span class="pill p-green">$6.18</span></td></tr>
+          <tr><td>BHD | Reserva Dia Madre</td><td>25-34 Masculino</td><td>2</td><td>$11.23</td><td><span class="pill p-green">$5.62</span></td></tr>
+          <tr><td>BHD | Reserva Dia Madre</td><td>25-34 Femenino</td><td>5</td><td>$30.81</td><td><span class="pill p-green">$6.16</span></td></tr>
+          <tr><td>BHD | Reserva Dia Madre</td><td>45-54 Femenino</td><td>2</td><td>$15.45</td><td><span class="pill p-blue">$7.73</span></td></tr>
+          <tr><td>BHD | Reserva Dia Madre</td><td>55-64 Femenino</td><td>1</td><td>$15.06</td><td><span class="pill p-orange">$15.06</span></td></tr>
+          <tr><td>CITY | RESERVAS ELIO</td><td>35-44 Femenino</td><td>2</td><td>$26.23</td><td><span class="pill p-orange">$13.12</span></td></tr>
+          <tr><td>CITY | RESERVAS ELIO</td><td>35-44 Masculino</td><td>1</td><td>$14.49</td><td><span class="pill p-orange">$14.49</span></td></tr>
+          <tr><td>CITY | RESERVAS ELIO</td><td>45-54 Femenino</td><td>1</td><td>$17.06</td><td><span class="pill p-orange">$17.06</span></td></tr>
+          <tr><td>CITY | RESERVAS ELIO</td><td>25-34 Masculino</td><td>1</td><td>$23.72</td><td><span class="pill p-orange">$23.72</span></td></tr>
+          <tr><td>BHD | Reserva Dia Madre</td><td>35-44 Femenino</td><td>1</td><td>$27.70</td><td><span class="pill p-red">$27.70</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TRAFICO -->
+    <div id="tab-trafico" class="tab-pane">
+      <div class="hl">
+        <div class="hl-title">Lo que esta funcionando bien</div>
+        <div class="hl-item">CTR promedio de 1.83% — por encima del benchmark de industria (1.0-1.2%)</div>
+        <div class="hl-item">55-64 Femenino: 4.26% CTR y 65+ Femenino: 5.01% CTR — segmentos con mayor engagement</div>
+        <div class="hl-item">CPC promedio de $0.09 — costo de trafico muy competitivo para categoria vinos</div>
+        <div class="hl-item">834 clics al sitio con $77.48 de inversion total</div>
+      </div>
+      <div class="stat-grid cols4">
+        <div class="stat-box"><div class="v">$77.48</div><div class="l">Inversion</div></div>
+        <div class="stat-box"><div class="v">834</div><div class="l">Clics al sitio</div></div>
+        <div class="stat-box"><div class="v">1.83%</div><div class="l">CTR promedio</div></div>
+        <div class="stat-box"><div class="v">$0.09</div><div class="l">CPC promedio</div></div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Segmento</th><th>Inversion</th><th>Impresiones</th><th>Clics</th><th>CTR</th><th>CPC</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>65+ Femenino</td><td>$1.33</td><td>359</td><td>18</td><td><span class="pill p-green">5.01%</span></td><td>$0.07</td></tr>
+          <tr><td>55-64 Femenino</td><td>$4.01</td><td>940</td><td>40</td><td><span class="pill p-green">4.26%</span></td><td>$0.10</td></tr>
+          <tr><td>45-54 Femenino</td><td>$7.90</td><td>2,625</td><td>64</td><td><span class="pill p-blue">2.44%</span></td><td>$0.12</td></tr>
+          <tr><td>65+ Masculino</td><td>$0.86</td><td>190</td><td>5</td><td><span class="pill p-blue">2.63%</span></td><td>$0.17</td></tr>
+          <tr><td>35-44 Masculino</td><td>$4.79</td><td>3,600</td><td>67</td><td><span class="pill p-blue">1.86%</span></td><td>$0.07</td></tr>
+          <tr><td>18-24 Femenino</td><td>$3.55</td><td>3,764</td><td>67</td><td><span class="pill p-blue">1.78%</span></td><td>$0.05</td></tr>
+          <tr><td>25-34 Femenino</td><td>$21.24</td><td>16,495</td><td>268</td><td><span class="pill p-blue">1.62%</span></td><td>$0.08</td></tr>
+          <tr><td>35-44 Femenino</td><td>$17.94</td><td>8,150</td><td>172</td><td><span class="pill p-blue">2.11%</span></td><td>$0.10</td></tr>
+          <tr><td>45-54 Masculino</td><td>$3.29</td><td>1,483</td><td>22</td><td><span class="pill p-gray">1.48%</span></td><td>$0.15</td></tr>
+          <tr><td>25-34 Masculino</td><td>$8.24</td><td>6,023</td><td>87</td><td><span class="pill p-gray">1.44%</span></td><td>$0.09</td></tr>
+          <tr><td>55-64 Masculino</td><td>$2.81</td><td>571</td><td>8</td><td><span class="pill p-gray">1.40%</span></td><td>$0.35</td></tr>
+          <tr><td>18-24 Masculino</td><td>$1.28</td><td>1,137</td><td>12</td><td><span class="pill p-gray">1.06%</span></td><td>$0.11</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<footer>
+  Generado el 19 mayo 2026 &nbsp;·&nbsp; Fuente: Meta Ads Manager &nbsp;·&nbsp; Periodo: 1–19 mayo 2026
+</footer>
+
+<script>
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+const palette = {
+  blue:'#1877F2', green:'#00A854', orange:'#F59E0B', purple:'#7C3AED',
+  red:'#DC2626', gray:'#9CA3AF', lightBlue:'#BFDBFE'
+};
+
+// Spend by campaign
+new Chart(document.getElementById('spendChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Packs Madres','BHD Reserva Madre','CITY Elio','2026 WHATSAPP','BDH Alcance','BDH Packs WS','Brunch Mayo','BDH Invit. Madre','Web Vinos'],
+    datasets: [{
+      data: [319.53, 240.23, 230.73, 221.13, 221.13, 166.11, 145.97, 105.45, 77.48],
+      backgroundColor: [
+        '#9CA3AF','#9CA3AF','#F59E0B',
+        '#00A854','#7C3AED',
+        '#9CA3AF','#9CA3AF','#BFDBFE','#F59E0B'
+      ],
+      borderRadius: 5
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    plugins: { legend:{display:false}, tooltip:{ callbacks:{ label: c=>' $'+c.raw.toFixed(0) } } },
+    scales: {
+      x: { beginAtZero:true, ticks:{ callback:v=>'$'+v } },
+      y: { ticks:{ font:{size:11} } }
+    }
+  }
+});
+
+// Objective doughnut
+new Chart(document.getElementById('objChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Mensajes ($958)','Leads ($471)','Alcance ($221)','Trafico ($77)'],
+    datasets: [{
+      data: [958.19, 470.96, 221.13, 77.48],
+      backgroundColor: ['#1877F2','#F59E0B','#7C3AED','#00A854'],
+      borderWidth: 3,
+      borderColor: '#fff'
+    }]
+  },
+  options: {
+    cutout: '62%',
+    plugins: {
+      legend: { position:'bottom', labels:{ padding:14, font:{size:12} } },
+      tooltip: { callbacks:{ label: c=>' '+((c.raw/1727.76)*100).toFixed(1)+'% del presupuesto' } }
+    }
+  }
+});
+
+// Mensajes bar + line
+new Chart(document.getElementById('mensajesChart'), {
+  type: 'bar',
+  data: {
+    labels: ['2026 WHATSAPP','BDH Invit. Madre','BDH Packs WS','Brunch Mayo v2','Packs Madres'],
+    datasets: [
+      {
+        label: 'Conversaciones',
+        data: [254, 42, 35, 27, 58],
+        backgroundColor: '#1877F2',
+        borderRadius: 5,
+        yAxisID: 'y'
+      },
+      {
+        label: 'CPR (USD)',
+        data: [0.87, 2.51, 4.75, 5.41, 5.51],
+        type: 'line',
+        borderColor: '#F59E0B',
+        backgroundColor: 'rgba(245,158,11,0.1)',
+        borderWidth: 2.5,
+        pointRadius: 5,
+        pointBackgroundColor: '#F59E0B',
+        yAxisID: 'y1'
+      }
+    ]
+  },
+  options: {
+    plugins: { legend:{ position:'top' } },
+    scales: {
+      y: { beginAtZero:true, title:{display:true,text:'Conversaciones',font:{size:11}} },
+      y1: { beginAtZero:true, position:'right', title:{display:true,text:'CPR ($)',font:{size:11}},
+        grid:{drawOnChartArea:false} }
+    }
+  }
+});
+
+// Alcance spend by segment
+new Chart(document.getElementById('alcanceChart'), {
+  type: 'bar',
+  data: {
+    labels: ['18-24 M','25-34 M','18-24 F','25-34 F','35-44 M','35-44 F','45-54 M','45-54 F','55-64 F','55-64 M','65+ F','65+ M'],
+    datasets: [{
+      label: 'Inversion',
+      data: [50.32,48.09,46.11,31.99,14.93,9.91,5.54,4.85,2.55,2.31,1.71,1.45],
+      backgroundColor: '#7C3AED',
+      borderRadius: 4
+    }]
+  },
+  options: {
+    plugins: { legend:{display:false} },
+    scales: {
+      x: { ticks:{ font:{size:10} } },
+      y: { beginAtZero:true, ticks:{ callback:v=>'$'+v } }
+    }
+  }
+});
+</script>
+</body>
+</html>
